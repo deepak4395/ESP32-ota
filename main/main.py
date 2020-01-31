@@ -1,4 +1,5 @@
 from main.ota_updater import OTAUpdater
+import time
 ssid = "M 57"
 password = "8376918157"
 import network
@@ -16,7 +17,8 @@ def download_and_install_update_if_available():
     ota_updater.download_and_install_update_if_available(ssid,password)
 
 def start():
-    print("in Code")
+    print("in OTA")
+    time.sleep(10)
 
 def boot():
     download_and_install_update_if_available()
