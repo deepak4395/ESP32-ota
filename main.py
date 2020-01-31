@@ -1,7 +1,9 @@
 from main.ota_updater import OTAUpdater
-import time
+import machine
+
 ssid = "M 57"
 password = "8376918157"
+
 import network
 sta_if = network.WLAN(network.STA_IF)
 if not sta_if.isconnected():
@@ -13,16 +15,9 @@ if not sta_if.isconnected():
 print('network config:', sta_if.ifconfig())
 
 ota_updater = OTAUpdater('https://github.com/deepak4395/ESP32-ota')
-def download_and_install_update_if_available():    
-    ota_updater.download_and_install_update_if_available(ssid,password)
+ota_updater.download_and_install_update_if_available(ssid,password)
+if (ota_updater.check_for_update_to_install_during_next_reboot()):
+    machine.reset()
 
-def start():
-    print("in OTA")
-    time.sleep(10)
-
-def boot():
-    download_and_install_update_if_available()
-    start()
-
-boot()
-ota_updater.check_for_update_to_install_during_next_reboot()
+from main.lock import Project
+Project()
